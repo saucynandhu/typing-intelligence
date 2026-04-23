@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TypingSession {
+  id            String          @id @default(cuid())
+  userId        String?
+  promptWords   String[]
+  totalWpm      Float?
+  totalAccuracy Float?
+  durationMs    Int?
+  startedAt     DateTime        @default(now())
+  finishedAt    DateTime?
+  events        KeystrokeEvent[]
+  features      SessionFeature?
+}
+
+model KeystrokeEvent {
+  id             String   @id @default(cuid())
+  sessionId      String
+  key            String
+  timestamp      BigInt
+  expectedChar   String
+  isMatch        Boolean
+  interKeyDelayMs Int?
+  holdDurationMs Int?
+  usedCorrection Boolean?
+  wordIndex      Int
+  charIndex      Int
+  createdAt      DateTime @default(now())
+  session        TypingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, timestamp])
+}
+
+model SessionFeature {
+  id                  String   @id @default(cuid())
+  sessionId           String   @unique
+  avgWpm              Float
+  wpmVariance         Float
+  avgHesitationMs     Float
+  errorRate           Float
+  bigramLatencyJson   Json
+  createdAt           DateTime @default(now())
+  session             TypingSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model Word {
+  id        String   @id @default(cuid())
+  value     String   @unique
+  createdAt DateTime @default(now())
+  skills    WordSkill[]
+}
+
+model WordSkill {
+  id                String   @id @default(cuid())
+  userId            String
+  wordId            String
+  accuracyEma       Float
+  speedMs           Float
+  stabilityVariance Float
+  attempts          Int      @default(0)
+  difficultyScore   Float    @default(0)
+  updatedAt         DateTime @updatedAt
+  word              Word     @relation(fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordId])
+}
+
+model SequenceStat {
+  id             String   @id @default(cuid())
+  userId         String
+  sequence       String
+  errorFrequency Float
+  avgDelayMs     Float
+  createdAt      DateTime @default(now())
+
+  @@unique([userId, sequence])
+}
+
+model UserEmbedding {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  vector    Json
+  createdAt DateTime @default(now())
+}
+
+model BanditWordState {
+  id          String   @id @default(cuid())
+  userId      String
+  wordId      String
+  pulls       Int      @default(0)
+  avgReward   Float    @default(0)
+  confidence  Float    @default(0)
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, wordId])
+}
