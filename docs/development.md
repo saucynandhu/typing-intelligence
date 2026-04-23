@@ -12,6 +12,10 @@
 - `npm run test`: run node tests.
 - `npm run build`: production build check.
 
+## Import Alias
+- The web app uses `@/*` imports mapped in `apps/web/tsconfig.json`.
+- If module resolution fails for `@/` paths, confirm `baseUrl` is `.` and `paths` includes `"@/*": ["./*"]`.
+
 ## Commit Order Per Phase
 1. Schema and migration updates.
 2. API/backend behavior.
