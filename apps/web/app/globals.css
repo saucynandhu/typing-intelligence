@@ -1,7 +1,12 @@
 :root {
-  font-family: Inter, Arial, sans-serif;
-  color: #111827;
-  background: #f3f4f6;
+  --bg-color: #323437;
+  --main-color: #e2b714;
+  --caret-color: #e2b714;
+  --sub-color: #646669;
+  --text-color: #d1d0c5;
+  --error-color: #ca4754;
+  --error-extra-color: #791717;
+  --font-family: 'Roboto Mono', 'Courier New', monospace;
 }
 
 * {
@@ -10,17 +15,42 @@
 
 body {
   margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
 }
 
 main {
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
 .card {
-  background: #fff;
+  background: #2c2e31;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 2rem;
   margin-bottom: 1rem;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sub-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }

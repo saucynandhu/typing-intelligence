@@ -1,5 +1,6 @@
-const { spawn } = require("node:child_process");
 const path = require("node:path");
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
+const { spawn } = require("node:child_process");
 
 const pipeline = [
   "extract-features.js",
@@ -12,7 +13,10 @@ const pipeline = [
 function runScript(scriptName) {
   return new Promise((resolve, reject) => {
     const file = path.join(__dirname, scriptName);
-    const child = spawn("node", [file], { stdio: "inherit" });
+    const child = spawn("node", [file], { 
+      stdio: "inherit",
+      env: { ...process.env }
+    });
     child.on("exit", (code) => {
       if (code === 0) resolve();
       else reject(new Error(`${scriptName} failed with code ${code}`));
