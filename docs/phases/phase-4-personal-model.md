@@ -1,11 +1,14 @@
 # phase-4-personal-model
 
 ## Outcome
-Implemented according to stage plan.
+Personal scoring now uses explicit EMA + time decay and persists calibrated `difficultyScore` values per word. The profile API surfaces per-word diagnostics and confidence.
 
 ## Verification
 - npm run lint
 - npm run test
+- npm run pipeline:run-all
+- npm run pipeline:evaluate
 
 ## Notes
-Increment includes code, tests, and API/doc updates for this phase.
+- Added decay-aware score updates in `scripts/pipelines/update-personal-model.js`.
+- Added confidence/component diagnostics in `apps/web/app/api/insights/profile/route.ts`.

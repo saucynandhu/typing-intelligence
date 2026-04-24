@@ -13,5 +13,10 @@
 ## Adaptive Endpoints
 - `GET /api/adaptive/next-words?userId=<id>`
   - Returns targeted words ranked by personalized difficulty.
+  - Includes diagnostics for top candidates (`difficulty`, `confidence`) when personal skill data exists.
+  - Uses cold-start fallback:
+    - similar-user bootstrap when embeddings are available
+    - default seed list when no embedding is available
 - `GET /api/insights/profile?userId=<id>`
-  - Returns weak words and weak letter-sequence hotspots.
+  - Returns weak words with diagnostics (`difficultyScore`, component penalties, confidence).
+  - Returns sequence hotspots with confidence and threshold metadata.

@@ -12,6 +12,8 @@
     "start": "npm run start --workspace @typing/web",
     "lint": "npm run lint --workspace @typing/web",
     "test": "npm run test --workspace @typing/web",
+    "pipeline:run-all": "node scripts/pipelines/run-all.js",
+    "pipeline:evaluate": "node scripts/pipelines/evaluate-models.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "node scripts/seed-words.js"

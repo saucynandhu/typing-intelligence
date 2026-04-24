@@ -11,9 +11,10 @@ Typing Intelligence is a staged typing platform that starts as an MVP typing tes
 1. `npm install`
 2. `cp .env.example .env` and set `DATABASE_URL`
 3. `npm run prisma:generate`
-4. `npm run prisma:migrate`
+4. `npm run prisma:migrate` (or `npx prisma db push` for pooled cloud setups)
 5. `npm run prisma:seed`
-6. `npm run dev`
+6. `npm run pipeline:run-all` (optional deep-model refresh)
+7. `npm run dev`
 
 ## Documentation
 - `docs/architecture.md`
